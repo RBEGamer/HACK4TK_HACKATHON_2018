@@ -7,13 +7,49 @@ class Building:
         GRAPHML_DEFINITION = "building_definition.graphml"
         self.graph = nx.readwrite.graphml.read_graphml(GRAPHML_DEFINITION)
 
+    def getFloorAttributes(self, floor_id):
+        """
+              returns a dictionary of floor attributes
+                Args:
+                    floor_id (str): The name of floor node in a graph
+
+                Returns:
+                    dict: {'position_in_graph_x': 1, 'position_in_graph_y': 2}
+                """
+        if(floor_id in self.graph.nodes):
+            return self.graph.nodes[floor_id]
+        else:
+            return None
+
+
+
+    def addElevatorToFloor(self, floor_id, elevator):
+        """
+        Sets a position of an elevator to be on a certain floor
+        Args:
+            floor_id (str): The name of floor node in a graph
+            elevator (Elevator): Elevator object
+
+        Returns:
+            bool: The return value. True for success, False otherwise.
+        """
+        if(floor_id in self.graph.nodes):
+            self.graph.nodes[floor_id]['elevator'] = elevator
+
+            return True
+        else:
+            return False
+
+    def getNodeNeighbours(self, node_id):
+        succ = []
+        for s in self.graph.successors(node_id):
+            succ.append(s)
+        return succ
+
     def showGraph(self):
-	import matplotlib.pyplot as plt
-	nx.draw(self.graph, nodecolor='r', edge_color='b')
-	plt.show()
-
-
-
+        import matplotlib.pyplot as plt
+        nx.draw(self.graph, nodecolor='r', edge_color='b')
+        plt.show()
 
 
 ##################################
