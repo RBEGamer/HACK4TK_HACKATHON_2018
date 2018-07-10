@@ -21,8 +21,6 @@ class Building:
         else:
             return None
 
-
-
     def addElevatorToFloor(self, floor_id, elevator):
         """
         Sets a position of an elevator to be on a certain floor
