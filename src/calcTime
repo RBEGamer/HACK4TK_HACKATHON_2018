@@ -28,5 +28,5 @@ def stoppingDistance(acc, timeAcc)
     if stopDist > moveDist:
         move()              #yet to be implented
     else:
-        accTime()
+        accTime(stopDist)
         startBreak(timeAcc) #yet to be implemented
