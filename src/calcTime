@@ -1,7 +1,7 @@
-const int acc = 1 # [m/s^2] acceleration
-const int velVert = 5 # [m/s] vertical speed
-const int vetHor = 1 # [m/s] horizontal speed
-int rotTime = 6 # [s]
+const int acc = 1 #m/s^2
+const int velVert = 5 #m/s vertical speed
+const int vetHor = 1 #m/s horizontal speed
+int rotTime = 6 #s
 
 #Calcuates the time the elevator needs to reach maximum velocity (maxPositive = 5m/s maxNegative = 0 m/s)
 def accTime(stoppingDistance)
@@ -30,14 +30,9 @@ def compTime(velTime, accTime, boardingTime, rotationSpeed)
     return time
 
 #Calculates the distance to stop until the elevator has to stop to reach the destination
-def stoppingDistance(accTime)
-    float stopDist = (acc*time^2)/2
+def stoppingDistance(move)
+    float stopDist = (vel/10)^2
     stopDist = round(stopDist,2)
-    if stopDist > moveDist:
-        move()              
-    else:
-        accTime(stopDist)
-        startBreak(timeAcc) #yet to be implemented
     return stopDist
 
 #Set the appropariet speed 5m/s vertical, 1m/s horizontal and moves the elevator
