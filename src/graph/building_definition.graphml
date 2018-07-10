@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"  
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns 
+        http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+
+  <key id="position_x" for="node" attr.name="position_in_graph_x" attr.type="int"/>
+  <key id="position_y" for="node" attr.name="position_in_graph_y" attr.type="int"/>
+
+  <key id="height" for="edge" attr.name="weight" attr.type="int"/>
+  <graph id="G" edgedefault="directed">
+	<node id="floor1_1">
+		<data key="position_x">1</data>
+		<data key="position_y">1</data>
+	</node>
+	<node id="floor2_1">
+		<data key="position_x">1</data>
+		<data key="position_y">2</data>
+	</node>
+	<node id="floor3_1">
+		<data key="position_x">1</data>
+		<data key="position_y">3</data>
+	</node>
+	<node id="floor4_1">
+		<data key="position_x">1</data>
+		<data key="position_y">4</data>
+	</node>
+	<node id="floor5_1">
+		<data key="position_x">1</data>
+		<data key="position_y">5</data>
+	</node>
+	<node id="floor6_1">
+		<data key="position_x">1</data>
+		<data key="position_y">6</data>
+	</node>
+	<node id="floor7_1">
+		<data key="position_x">1</data>
+		<data key="position_y">7</data>
+	</node>
+	<node id="floor8_1">
+		<data key="position_x">1</data>
+		<data key="position_y">8</data>
+	</node>
+	<node id="floor9_1">
+		<data key="position_x">1</data>
+		<data key="position_y">9</data>
+	</node>
+	<node id="floor10_1">
+		<data key="position_x">1</data>
+		<data key="position_y">10</data>
+	</node>
+	<node id="floor11_1">
+		<data key="position_x">1</data>
+		<data key="position_y">11</data>
+	</node>
+	<node id="floor12_1">
+		<data key="position_x">1</data>
+		<data key="position_y">12</data>
+	</node>
+	<node id="floor13_1">
+		<data key="position_x">1</data>
+		<data key="position_y">13</data>
+	</node>
+	<node id="floor14_1">
+		<data key="position_x">1</data>
+		<data key="position_y">14</data>
+	</node>
+	<node id="floor15_1">
+		<data key="position_x">1</data>
+		<data key="position_y">15</data>
+	</node>
+	<node id="floor16_1">
+		<data key="position_x">1</data>
+		<data key="position_y">16</data>
+	</node>
+	<node id="floor17_1">
+		<data key="position_x">1</data>
+		<data key="position_y">17</data>
+	</node>
+
+
+
+
+
+
+
+	<node id="floor1_2">
+		<data key="position_x">3</data>
+		<data key="position_y">1</data>
+	</node>
+	<node id="floor2_2">
+		<data key="position_x">3</data>
+		<data key="position_y">2</data>
+	</node>
+	<node id="floor3_2">
+		<data key="position_x">3</data>
+		<data key="position_y">3</data>
+	</node>
+	<node id="floor4_2">
+		<data key="position_x">3</data>
+		<data key="position_y">4</data>
+	</node>
+	<node id="floor5_2">
+		<data key="position_x">3</data>
+		<data key="position_y">5</data>
+	</node>
+	<node id="floor6_2">
+		<data key="position_x">3</data>
+		<data key="position_y">6</data>
+	</node>
+	<node id="floor7_2">
+		<data key="position_x">3</data>
+		<data key="position_y">7</data>
+	</node>
+	<node id="floor8_2">
+		<data key="position_x">3</data>
+		<data key="position_y">8</data>
+	</node>
+	<node id="floor9_2">
+		<data key="position_x">3</data>
+		<data key="position_y">9</data>
+	</node>
+	<node id="floor10_2">
+		<data key="position_x">3</data>
+		<data key="position_y">10</data>
+	</node>
+	<node id="floor11_2">
+		<data key="position_x">3</data>
+		<data key="position_y">11</data>
+	</node>
+	<node id="floor12_2">
+		<data key="position_x">3</data>
+		<data key="position_y">12</data>
+	</node>
+	<node id="floor13_2">
+		<data key="position_x">3</data>
+		<data key="position_y">13</data>
+	</node>
+	<node id="floor14_2">
+		<data key="position_x">3</data>
+		<data key="position_y">14</data>
+	</node>
+	<node id="floor15_2">
+		<data key="position_x">3</data>
+		<data key="position_y">15</data>
+	</node>
+	<node id="floor16_2">
+		<data key="position_x">3</data>
+		<data key="position_y">16</data>
+	</node>
+	<node id="floor17_2">
+		<data key="position_x">3</data>
+		<data key="position_y">17</data>
+	</node>
+
+	<edge id="floor1_1_floor2_1" source="floor1_1" target="floor2_1">
+		<data key="height">60</data>
+	</edge>
+	<edge id="floor2_1_floor3_1" source="floor2_1" target="floor3_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor3_1_floor4_1" source="floor3_1" target="floor4_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor4_1_floor5_1" source="floor4_1" target="floor5_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor5_1_floor6_1" source="floor5_1" target="floor6_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor6_1_floor7_1" source="floor6_1" target="floor7_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor7_1_floor8_1" source="floor7_1" target="floor8_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor8_1_floor9_1" source="floor8_1" target="floor9_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor9_1_floor10_1" source="floor9_1" target="floor10_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor10_1_floor11_1" source="floor10_1" target="floor11_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor11_1_floor12_1" source="floor11_1" target="floor12_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor12_1_floor13_1" source="floor12_1" target="floor13_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor13_1_floor14_1" source="floor13_1" target="floor14_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor14_1_floor15_1" source="floor14_1" target="floor15_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor15_1_floor16_1" source="floor15_1" target="floor16_1">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor16_1_floor17_1" source="floor16_1" target="floor17_1">
+		<data key="height">4</data>
+	</edge>
+
+	<edge id="floor2_2_floor1_2" source="floor2_2" target="floor1_2">
+		<data key="height">60</data>
+	</edge>
+	<edge id="floor3_2_floor2_2" source="floor3_2" target="floor2_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor4_2_floor3_2" source="floor4_2" target="floor3_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor5_2_floor4_2" source="floor5_2" target="floor4_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor6_2_floor5_2" source="floor6_2" target="floor5_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor7_2_floor6_2" source="floor7_2" target="floor6_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor8_2_floor7_2" source="floor8_2" target="floor7_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor9_2_floor8_2" source="floor9_2" target="floor8_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor10_2_floor9_2" source="floor10_2" target="floor9_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor11_2_floor10_2" source="floor11_2" target="floor10_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor12_2_floor11_2" source="floor12_2" target="floor11_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor13_2_floor12_2" source="floor13_2" target="floor12_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor14_2_floor13_2" source="floor14_2" target="floor13_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor15_2_floor14_2" source="floor15_2" target="floor14_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor16_2_floor15_2" source="floor16_2" target="floor15_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor17_2_floor16_2" source="floor17_2" target="floor16_2">
+		<data key="height">4</data>
+	</edge>
+
+
+
+
+  </graph>
+</graphml>
+
