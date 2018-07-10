@@ -7,10 +7,11 @@ class Building:
         GRAPHML_DEFINITION = "building_definition.graphml"
         self.graph = nx.readwrite.graphml.read_graphml(GRAPHML_DEFINITION)
 
-    def showGraph():
+    def showGraph(self):
 	import matplotlib.pyplot as plt
 	nx.draw(self.graph, nodecolor='r', edge_color='b')
 	plt.show()
+
 
 
 
