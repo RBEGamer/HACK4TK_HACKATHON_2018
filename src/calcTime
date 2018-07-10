@@ -27,7 +27,7 @@ def stoppingDistance()
 
     stopDist = (acc*time^2)/2
     if stopDist > moveDist:
-        move()
+        move()              #yet to be implented
     else:
         accTime()
-        startBreak(timeAcc)
+        startBreak(timeAcc) #yet to be implemented
