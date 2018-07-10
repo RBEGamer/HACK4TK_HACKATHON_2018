@@ -14,9 +14,9 @@ function guid() {
 
 
 
-var grid = 20;
+var grid = 30;
  var grid_w = 10;
- var grid_h = 14+17;
+ var grid_h = 17;
 var uuoid = 0;
 var canvas = new fabric.Canvas('c', { selection: false,width: grid_w*grid, height: grid_h*grid  });
 
@@ -176,8 +176,8 @@ canvas.on('object:moving', function(options) {
     left: Math.round(options.target.left / grid) * grid,
     top: Math.round(options.target.top / grid) * grid,
 
-    pos_x:Math.floor(options.target.left / grid),
-    pos_y:Math.floor(options.target.top / grid)
+    pos_x:Math.round(options.target.left / grid),
+    pos_y:Math.round(options.target.top / grid)
   });
   
 });
@@ -241,14 +241,9 @@ canvas.on('object:moving', function(options) {
 var arr = [];
     for (let index = 0; index < canvas.getObjects().length; index++) {
         const element = canvas.getObjects()[index];
-
         if(element.evevator_track_part != undefined && element.evevator_track_part != null && element.evevator_track_part){
-           // debugger;
-            arr.push({track_type:element.track_type,pos_x:element.pos_x,pos_y:element.pos_y,uuid:element.uuid, inc_uuid:element.inc_uuid});
-          }
-
-
-        
+            arr.push({track_type:element.track_type,pos_x:element.pos_x,pos_x_floor:element.pos_x+1,pos_y:element.pos_y,pos_y_floor:grid_h-element.pos_y,uuid:element.uuid, inc_uuid:element.inc_uuid});
+          }  
     }    
     fs.writeFile ("./grid_data.json", JSON.stringify({grid:grid, grid_w:grid_w,grid_h:grid_h,tracks:arr}), function(err) {
         if (err) throw err;
