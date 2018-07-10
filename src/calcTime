@@ -1,11 +1,10 @@
-#Accelertation
-const int acc = 1 #m/s^2
-const int velVert = 5 #m/s vertical speed
-const int vetHor = 1 #m/s horizontal speed
-int rotTime = 6 #s
+const int acc = 1 # [m/s^2] acceleration
+const int velVert = 5 # [m/s] vertical speed
+const int vetHor = 1 # [m/s] horizontal speed
+int rotTime = 6 # [s]
 
 #Calcuates the time the elevator needs to reach maximum velocity (maxPositive = 5m/s maxNegative = 0 m/s)
-def accTime(acc, stoppingDistance)
+def accTime(stoppingDistance)
     float timeA
     float timeOld
     timeOld = timeA
