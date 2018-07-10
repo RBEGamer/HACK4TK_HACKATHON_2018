@@ -21,7 +21,7 @@ def velTime(vel, dist)
 #Complete time the cabin need (include accelaration and breaks) from point A to B
 def compTime(timeV, timeA)
     float time
-    time = timeV + time A
+    time = timeV + timeA
     return time
 
 def stoppingDistance(acc, timeAcc)
@@ -33,6 +33,7 @@ def stoppingDistance(acc, timeAcc)
         accTime(stopDist)
         startBreak(timeAcc) #yet to be implemented
     return stopDist
+
 #Set the appropariet speed 5m/s vertical, 1m/s horizontal
 def move()
     if direction is "vertical":
@@ -40,4 +41,12 @@ def move()
     else:
         vel = horVel
     return vel
+
+#Time needed per person to get into the elevator
+def boardingTime(int passengers)
+    int boardtimeTime = 4+passengers
+    return boardTime
+
+int rotHorizontal = 3
+int rotVertical = 3
 
