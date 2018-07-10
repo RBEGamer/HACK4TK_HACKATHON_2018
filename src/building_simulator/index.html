@@ -57,7 +57,11 @@
 
 
           <div class="row">
-              <div class="span3 custom-nav" style="width: 33%;"></div>
+              <div class="span3 custom-nav" style="width: 33%;">
+
+
+                
+              </div>
               <div class="span3 custom-widget pull-right">
                 <table>
                   <tr><th>CONTROLS</th></tr>
@@ -82,13 +86,38 @@
                   </td></tr>
 
                   <tr><td>
+                      <input type="button" id="export_btn" name="export_btn" value="EXPORT_JSON">
+              </td></tr>
+
+
+              <tr><td>
 
                       
-                      <input type="button" id="export_btn" name="export_btn" value="EXPORT_JSON">
-                 
-                 
+                  <input type="button" id="import_btn" name="import_btn" value="IMPORT_JSON">
+             
+             
 
-              </td></tr>
+          </td></tr>
+
+
+
+          <tr><td>
+              <input type="button" id="add_hori_track_btn" name="add_hori_track_btn" value="ADD HORIZONTAL TRACK">
+      </td></tr>
+
+
+      <tr><td>
+          <input type="button" id="add_changer_track_btn" name="add_changer_track_btn" value="ADD CHANGER">
+  </td></tr>
+
+  <tr><td>
+      <input type="button" id="add_stop_track_btn" name="add_stop_track_btn" value="ADD STOP">
+</td></tr>
+  
+<tr><td>
+    <input type="button" id="add_cabin_track_btn" name="add_cabin_track_btn" value="ADD CABIN">
+</td></tr>
+
                 </table>
               </div>
               <div class="span6 custom-content" style="width: 33%;"><canvas id="c" width="600" height="600"></canvas></div>
