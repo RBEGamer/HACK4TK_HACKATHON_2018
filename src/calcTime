@@ -4,21 +4,30 @@ def accTime(acc, dist)
     float timeA
     float timeOld
     timeOld = timeA
-    if(acc == true)
-        timeA = (sqrt(2*acc/dist)) + timeOld
-    return timeA
+    if acc == true:
+        timeAcc = (sqrt(2*acc*dist)) + timeOld
+    return timeAcc
 
 #Time needed fo cambin to move the distance "dist"
 def velTime(vel, dist)
     float timeV
     float timeOld
     timeOld = timeV
-    if(vel ==  true)
-        timeV = (vel/dist) +timeOld
-    return timeV
+    if vel ==  true:
+        timeVel = (vel/dist) +timeOld
+    return timeVel
 
 #Complete time the cabin need (include accelaration and breaks) from point A to B
 def compTime(timeV, timeA)
     float time
     time = timeV + time A
     return time
+
+def stoppingDistance()
+
+    stopDist = (acc*time^2)/2
+    if stopDist > moveDist:
+        move()
+    else:
+        accTime()
+        startBreak(timeAcc)
