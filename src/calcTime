@@ -14,7 +14,7 @@ def accTime(stoppingDistance)
     return timeAcc
 
 #Time needed fo cambin to move the distance "dist"
-def velTime(vel, stoppingDistance)
+def velTime(stoppingDistance)
     float timeV
     float timeOld
     timeOld = timeV
