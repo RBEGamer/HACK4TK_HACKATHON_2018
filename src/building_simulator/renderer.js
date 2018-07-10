@@ -3,7 +3,7 @@
 var grid = 20;
  var grid_w = 10;
  var grid_h = 14+17;
-
+var uuoid = 0;
 var canvas = new fabric.Canvas('c', { selection: false,width: grid_w*grid, height: grid_h*grid  });
 
 // create grid
@@ -52,40 +52,58 @@ for (var i = 0; i <grid_w*grid_h; i++) {
 }
 
 // add objects
-
-var obj =new fabric.Rect({ 
-  left: grid, 
-  top: grid, 
-  width: grid, 
-  height: grid, 
-  fill: '#faa', 
-  originX: 'left', 
-  originY: 'top',
-  centeredRotation: true,
-
-});
-obj.setControlsVisibility({
-    mt: false, 
-    mb: false, 
-    ml: false, 
-    mr: false, 
-    bl: false,
-    br: false, 
-    tl: false, 
-    tr: false,
-    mtr: false, 
-});
-canvas.add(obj);
+function add_elevator_obj(_x,_y,_type){
 
 
-canvas.on({'object:selected': selectedObject
-});
 
-function selectedObject(e) {
-    var id = canvas.getObjects().indexOf(e.target);
-    console.log(id);
-  
+
+    var obj =new fabric.Rect({ 
+        left: _x*grid, 
+        top: _y*grid, 
+        width: grid, 
+        height: grid, 
+        fill: '#faa', 
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true,
+        uuid:uuoid,
+        evevator_track_part:true
+      });
+      uuoid++;
+      obj.setControlsVisibility({
+          mt: false, 
+          mb: false, 
+          ml: false, 
+          mr: false, 
+          bl: false,
+          br: false, 
+          tl: false, 
+          tr: false,
+          mtr: false, 
+      });
+      canvas.add(obj);
+      
 }
+
+canvas.on('mouse:down', function (e) {
+
+    if(!document.getElementById("del_box").checked){return;}
+    // clicked item will be
+  
+      var id = canvas.getObjects().indexOf(e.target);
+      var obj = canvas.getObjects()[id];
+    
+
+      if(obj.evevator_track_part != undefined && obj.evevator_track_part != null && obj.evevator_track_part){
+        canvas.remove(obj);
+        document.getElementById("del_box").checked = false;
+      }
+      
+     // canvas.renderAll();
+      
+    });
+
+
 
 // snap to grid
 
@@ -97,4 +115,16 @@ canvas.on('object:moving', function(options) {
     left: Math.round(options.target.left / grid) * grid,
     top: Math.round(options.target.top / grid) * grid
   });
+  
 });
+
+
+
+add_elevator_obj(1,1,0);
+
+
+
+  document.getElementById("add_vert_track_btn").addEventListener("click", function( event ) {
+    // display the current click count inside the clicked div
+    add_elevator_obj(1,1,0);
+  }, false);
