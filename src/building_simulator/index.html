@@ -14,43 +14,65 @@
 
 
 
+
+.blue {
+   background:blue; 
+}
+
+
+.red  {
+    background:red; 
+}
+
+
+.voffset  { margin-top: 2px; }
+.voffset1 { margin-top: 5px; }
+.voffset2 { margin-top: 10px; }
+.voffset3 { margin-top: 15px; }
+.voffset4 { margin-top: 30px; }
+.voffset5 { margin-top: 40px; }
+.voffset6 { margin-top: 60px; }
+.voffset7 { margin-top: 80px; }
+.voffset8 { margin-top: 100px; }
+.voffset9 { margin-top: 150px; }
+
+
 </style>
   </head>
   <body>
 
 
 
-      <main role="main" class="container">
+      
          
+      <div class="container">
 
-          <canvas id="c" width="600" height="600"></canvas>
-
-
-        </main>
-    
-        <footer class="footer">
-          <div class="container">
-           
-
-
-              <div class="row">
-                  <div class="col-12 col-md-6">
-                     <form>
-                      <button class="btn btn-primary btn-lg" type="submit" formaction="1klasse.html">1.klasse </button>
-                     </form>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <form>
-                      <button class="btn btn-primary btn-lg" type="submit" formaction="1klasse.html">1.klasse </button>
-                     </form>
-                  </div>
-                </div>
+          <div class="row voffset6">
+              <div class="col-lg-12" align="center">
+               
+                 <h1>HACK4TK_MULTI_SIMULATOR</h1>
+               
+              </div>
+            </div>
 
 
-                
+          <div class="row">
+              <div class="span3 custom-nav" style="width: 33%;"></div>
+              <div class="span3 custom-widget pull-right">
+                <table>
+                  <tr><th>CONTROLS</th></tr>
+                  <tr><td></td></tr>
+                </table>
+              </div>
+              <div class="span6 custom-content" style="width: 33%;"><canvas id="c" width="600" height="600"></canvas></div>
           </div>
-        </footer>
+      </div>​
+          
 
+          
+      
+    
+       
 
     
     <!-- All of the Node.js APIs are available in this renderer process. -->
