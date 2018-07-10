@@ -1,6 +1,7 @@
 'use strict';
 var fs = require('fs');
 
+var mqtt = require('mqtt');
 
 
 function guid() {
@@ -18,6 +19,9 @@ var grid = 30;
  var grid_w = 10;
  var grid_h = 17;
 var uuoid = 0;
+
+
+var sim_running = false;
 var canvas = new fabric.Canvas('c', { selection: false,width: grid_w*grid, height: grid_h*grid  });
 
 // create grid
@@ -184,12 +188,55 @@ canvas.on('object:moving', function(options) {
 
 
 
+function load_sample_loop(){
 
+    add_elevator_obj(1,0,0);
 
+    add_elevator_obj(0,0,0);
+    add_elevator_obj(0,1,0);
+    add_elevator_obj(0,2,0);
+    add_elevator_obj(0,3,0);
+    add_elevator_obj(0,4,0);
+    add_elevator_obj(0,5,0);
+    add_elevator_obj(0,6,0);
+    add_elevator_obj(0,7,0);
+    add_elevator_obj(0,8,0);
+    add_elevator_obj(0,9,0);
+    add_elevator_obj(0,10,0);
+    add_elevator_obj(0,11,0);
+    add_elevator_obj(0,12,0);
+    add_elevator_obj(0,13,0);
+    add_elevator_obj(0,14,0);
+    add_elevator_obj(0,15,0);
+    add_elevator_obj(0,16,0);
+
+    add_elevator_obj(1,16,0);
+
+    add_elevator_obj(2,0,0);
+    add_elevator_obj(2,1,0);
+    add_elevator_obj(2,2,0);
+    add_elevator_obj(2,3,0);
+    add_elevator_obj(2,4,0);
+    add_elevator_obj(2,5,0);
+    add_elevator_obj(2,6,0);
+    add_elevator_obj(2,7,0);
+    add_elevator_obj(2,8,0);
+    add_elevator_obj(2,9,0);
+    add_elevator_obj(2,10,0);
+    add_elevator_obj(2,11,0);
+    add_elevator_obj(2,12,0);
+    add_elevator_obj(2,13,0);
+    add_elevator_obj(2,14,0);
+    add_elevator_obj(2,15,0);
+    add_elevator_obj(2,16,0);
+
+}
+load_sample_loop();
 
 
   document.getElementById("add_vert_track_btn").addEventListener("click", function( event ) {
     // display the current click count inside the clicked div
+    if(sim_running){return;}
     add_elevator_obj(0,0,0);
   }, false);
 
@@ -197,11 +244,13 @@ canvas.on('object:moving', function(options) {
 
   document.getElementById("export_btn").addEventListener("click", function( event ) {
     // display the current click count inside the clicked div
+    if(sim_running){return;}
     export_json();
   }, false);
 
   document.getElementById("import_btn").addEventListener("click", function( event ) {
     // display the current click count inside the clicked div
+    if(sim_running){return;}
     import_json();
   }, false);
 
@@ -210,11 +259,13 @@ canvas.on('object:moving', function(options) {
 
   document.getElementById("add_hori_track_btn").addEventListener("click", function( event ) {
     // display the current click count inside the clicked div
+    if(sim_running){return;}
     add_elevator_obj(0,0,1);
   }, false);
 
   document.getElementById("add_cabin_track_btn").addEventListener("click", function( event ) {
     // display the current click count inside the clicked div
+    if(sim_running){return;}
     add_elevator_obj(0,0,6);
   }, false);
 
@@ -222,18 +273,25 @@ canvas.on('object:moving', function(options) {
   
   document.getElementById("add_changer_track_btn").addEventListener("click", function( event ) {
     // display the current click count inside the clicked div
+    if(sim_running){return;}
     add_elevator_obj(0,0,3);
   }, false);
 
 
   document.getElementById("add_stop_track_btn").addEventListener("click", function( event ) {
     // display the current click count inside the clicked div
+    if(sim_running){return;}
     add_elevator_obj(0,0,4);
   }, false);
 
 
-  
+  document.getElementById("rum_sim_btn").addEventListener("click", function( event ) {
+    // display the current click count inside the clicked div
 
+    if(sim_running){ stop_sim_btn();return;}
+    run_simulation();
+  }, false);
+  
 
 
 
@@ -250,4 +308,77 @@ var arr = [];
         console.log('complete');
         }
     );
+  }
+
+
+
+
+
+
+
+
+function stop_sim_btn(){
+  
+
+}
+
+
+  function run_simulation(){
+    var graph = create_yamlgraph();
+    //
+  }
+
+  function create_yamlgraph(){
+
+var str = "";
+
+// \
+str += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+str +="<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">";
+
+
+str += "<key id=\"position_x\" for=\"node\" attr.name=\"position_in_graph_x\" attr.type=\"int\"/>";
+str += "<key id=\"position_y\" for=\"node\" attr.name=\"position_in_graph_y\" attr.type=\"int\"/>";
+str += "<key id=\"height\" for=\"edge\" attr.name=\"weight\" attr.type=\"int\"/>";
+
+str +=   "<graph id=\"G\" edgedefault=\"directed\">";
+
+
+var floorx = 0;
+var floory  =0;
+
+
+for (let index = 0; index < canvas.getObjects().length; index++) {
+    const element = canvas.getObjects()[index];
+    if(element.evevator_track_part != undefined && element.evevator_track_part != null && element.evevator_track_part){
+       // arr.push({track_type:element.track_type,pos_x:element.pos_x,pos_x_floor:element.pos_x+1,pos_y:element.pos_y,pos_y_floor:grid_h-element.pos_y,uuid:element.uuid, inc_uuid:element.inc_uuid});
+      floorx = element.pos_x+1;
+      floory = grid_h-element.pos_y;
+       str+="<node id=\"floor"+floorx+"_"+floory+"\"><data key=\"position_x\">"+floorx+"</data><data key=\"position_y\">"+floory+"</data></node>";    
+    }  
+}    
+
+
+
+//EDGE BUILDING
+
+var ed_from_x = 0;
+var ed_from_y = 0;
+var ed_to_x = 0;
+var ed_to_y = 0;
+var heigth = 4;
+str +="<edge id=\"floor"+ed_from_x+"_"+ed_from_y+"_floor"+ed_to_x+"_"+ed_to_y+"\" source=\"floor"+ed_from_x+"_"+ed_from_y+"\" target=\"floor"+ed_to_x+"_"+ed_to_y+"\"><data key=\"height\">"+heigth+"</data></edge>";
+
+
+
+
+
+fs.writeFile ("./grid_graph.graphml", str, function(err) {
+    if (err) throw err;
+    console.log('complete');
+    }
+);
+
+
+
   }
