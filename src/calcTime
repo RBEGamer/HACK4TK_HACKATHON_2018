@@ -24,7 +24,7 @@ def compTime(timeV, timeA)
     return time
 
 def stoppingDistance(acc, timeAcc)
-    stopDist = (acc*timeAcc^2)/2
+    stopDist = (acc*time^2)/2
     if stopDist > moveDist:
         move()              #yet to be implented
     else:
