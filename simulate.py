@@ -1,5 +1,5 @@
 def run_simulation():
-    with open('MorningTraffic-b.csv', 'r') as file:
+    with open('./data/MorningTraffic-b.csv', 'r') as file:
         content = file.readlines()
         content = [x.strip() for x in content]
         timestep = 0
