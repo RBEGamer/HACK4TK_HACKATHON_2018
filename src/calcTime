@@ -1,5 +1,11 @@
-#Time the cabin need to accelerate (pos and neg)
-def accTime(acc, stopDist)
+#Accelertation
+const int acc = 1 #m/s^2
+const int velVert = 5 #m/s vertical speed
+const int vetHor = 1 #m/s horizontal speed
+int rotTime = 6 #s
+
+#Calcuates the time the elevator needs to reach maximum velocity (maxPositive = 5m/s maxNegative = 0 m/s)
+def accTime(acc, stoppingDistance)
     float timeA
     float timeOld
     timeOld = timeA
@@ -9,7 +15,7 @@ def accTime(acc, stopDist)
     return timeAcc
 
 #Time needed fo cambin to move the distance "dist"
-def velTime(vel, dist)
+def velTime(vel, stoppingDistance)
     float timeV
     float timeOld
     timeOld = timeV
@@ -19,12 +25,13 @@ def velTime(vel, dist)
     return timeVel
 
 #Complete time the cabin need (include accelaration and breaks) from point A to B
-def compTime(timeV, timeA)
+def compTime(velTime, accTime, boardingTime, rotationSpeed)
     float time
-    time = timeV + timeA
+    time = velTime + accTime + boardingTime + rotationSpeed
     return time
 
-def stoppingDistance(acc, timeAcc)
+#Calculates the distance to stop until the elevator has to stop to reach the destination
+def stoppingDistance(accTime)
     float stopDist = (acc*time^2)/2
     stopDist = round(stopDist,2)
     if stopDist > moveDist:
@@ -34,7 +41,7 @@ def stoppingDistance(acc, timeAcc)
         startBreak(timeAcc) #yet to be implemented
     return stopDist
 
-#Set the appropariet speed 5m/s vertical, 1m/s horizontal
+#Set the appropariet speed 5m/s vertical, 1m/s horizontal and moves the elevator
 def move()
     if direction is "vertical":
         vel = vertVel
@@ -42,11 +49,12 @@ def move()
         vel = horVel
     return vel
 
-#Time needed per person to get into the elevator
-def boardingTime(int passengers)
-    int boardtimeTime = 4+passengers
+#Time needed per person to get into the elevator 
+def boardingTime(passengers)
+    int boardtimeTime = 4 + passengers
     return boardTime
 
-int rotHorizontal = 3
-int rotVertical = 3
+def rotationSpeed(numOfExchanger)
+    int exchangeTime = numOfExchanger * rotTime
+    return exchangeTime 
 
