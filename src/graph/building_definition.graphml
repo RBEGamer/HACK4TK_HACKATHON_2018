@@ -1,3 +1,29 @@
+
+Skip to content
+
+    Pull requests
+    Issues
+    Marketplace
+    Explore
+
+    @christophBehr
+
+3
+0
+
+    0
+
+RBEGamer/HACK4TK_HACKATHON_2018 Private
+Code
+Issues 0
+Pull requests 0
+Projects 0
+Wiki
+Insights
+HACK4TK_HACKATHON_2018/src/graph/building_definition.graphml
+1616717 5 minutes ago
+@RBEGamer RBEGamer graph changes
+270 lines (248 sloc) 7.45 KB
 <?xml version="1.0" encoding="UTF-8"?>
 <graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
 
@@ -212,52 +238,52 @@
 		<data key="height">4</data>
 	</edge>
 
-	<edge id="floor2_2_floor1_2" source="floor2_2" target="floor1_2">
+	<edge id="floor17_1_floor17_2" source="floor17_1" target="floor17_2">
 		<data key="height">60</data>
 	</edge>
-	<edge id="floor3_2_floor2_2" source="floor3_2" target="floor2_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor4_2_floor3_2" source="floor4_2" target="floor3_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor5_2_floor4_2" source="floor5_2" target="floor4_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor6_2_floor5_2" source="floor6_2" target="floor5_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor7_2_floor6_2" source="floor7_2" target="floor6_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor8_2_floor7_2" source="floor8_2" target="floor7_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor9_2_floor8_2" source="floor9_2" target="floor8_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor10_2_floor9_2" source="floor10_2" target="floor9_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor11_2_floor10_2" source="floor11_2" target="floor10_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor12_2_floor11_2" source="floor12_2" target="floor11_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor13_2_floor12_2" source="floor13_2" target="floor12_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor14_2_floor13_2" source="floor14_2" target="floor13_2">
-		<data key="height">4</data>
-	</edge>
-	<edge id="floor15_2_floor14_2" source="floor15_2" target="floor14_2">
+	<edge id="floor17_2_floor16_2" source="floor17_2" target="floor16_2">
 		<data key="height">4</data>
 	</edge>
 	<edge id="floor16_2_floor15_2" source="floor16_2" target="floor15_2">
 		<data key="height">4</data>
 	</edge>
-	<edge id="floor17_2_floor16_2" source="floor17_2" target="floor16_2">
+	<edge id="floor15_2_floor14_2" source="floor15_2" target="floor14_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor14_2_floor13_2" source="floor14_2" target="floor13_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor13_2_floor12_2" source="floor13_2" target="floor12_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor12_2_floor11_2" source="floor12_2" target="floor11_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor11_2_floor10_2" source="floor11_2" target="floor10_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor9_2_floor8_2" source="floor9_2" target="floor8_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor8_2_floor7_2" source="floor8_2" target="floor7_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor6_2_floor5_2" source="floor6_2" target="floor5_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor5_2_floor4_2" source="floor5_2" target="floor4_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor4_2_floor3_2" source="floor4_2" target="floor3_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor3_2_floor2_2" source="floor3_2" target="floor2_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor2_2_floor1_2" source="floor2_2" target="floor1_2">
+		<data key="height">4</data>
+	</edge>
+	<edge id="floor1_2_floor1_1" source="floor1_2" target="floor1_1">
 		<data key="height">4</data>
 	</edge>
 
@@ -267,3 +293,18 @@
   </graph>
 </graphml>
 
+    © 2018 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Status
+    Help
+
+    Contact GitHub
+    API
+    Training
+    Shop
+    Blog
+    About
+
+Press h to open a hovercard with more details.
