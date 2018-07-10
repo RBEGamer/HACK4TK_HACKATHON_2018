@@ -1,19 +1,19 @@
 #Time the cabin need to accelerate (pos and neg)
-def accTime(acc, dist)
-    float timeAcc
+def accTime(acc, stopDist)
+    float timeA
     float timeOld
-    timeOld = timeAcc
-    if acc == true:
-        timeAcc = (sqrt(2*acc*dist)) + timeOld
+    timeOld = timeA
+    if status is acceleration:
+        timeAcc = (sqrt(2*acc*stopDist)) + timeOld
         timeAcc = round(timeAcc, 2)
     return timeAcc
 
 #Time needed fo cambin to move the distance "dist"
 def velTime(vel, dist)
-    float timeVel
+    float timeV
     float timeOld
-    timeOld = timeVel
-    if vel ==  true:
+    timeOld = timeV
+    if status is velocity:
         float timeVel = (vel/dist) +timeOld
         timeVel = round(timeVel, 2)
     return timeVel
@@ -21,14 +21,23 @@ def velTime(vel, dist)
 #Complete time the cabin need (include accelaration and breaks) from point A to B
 def compTime(timeV, timeA)
     float time
-    time = timeVel + time Acc
+    time = timeV + time A
     return time
 
 def stoppingDistance(acc, timeAcc)
     float stopDist = (acc*time^2)/2
     stopDist = round(stopDist,2)
     if stopDist > moveDist:
-        move()              #yet to be implented
+        move()              
     else:
         accTime(stopDist)
         startBreak(timeAcc) #yet to be implemented
+    return stopDist
+#Set the appropariet speed 5m/s vertical, 1m/s horizontal
+def move()
+    if direction is "vertical":
+        vel = vertVel
+    else:
+        vel = horVel
+    return vel
+
