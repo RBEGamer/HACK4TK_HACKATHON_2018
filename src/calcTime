@@ -1,10 +1,11 @@
 int acc = 1 #m/s^2
 int velVert = 5 #m/s vertical speed
-int velHor = 1 #m/s horizontal speed
+int vetHor = 1 #m/s horizontal speed
 int rotTime = 6 #s
-int accelarationTime = 5 #[s] time needed to go from 0 m/s to 5 m/s and vice versa
+int accelaraionTime = 5 #[s] time needed to go from 0 m/s to 5 m/s and vice versa
 
 #If the elevator accelerates or brakes it needs 5 sec each time to do a full acceleration/stop
+
 def accTime()
     accTime = accelaraionTime
     return accTime
@@ -15,7 +16,7 @@ def velTime(distance)
     float timeOld
     timeOld = timeV
     if status is velocity:
-        float timeVel = (dist/velVert) +timeOld
+        float timeVel = (vel/dist) +timeOld
         timeVel = round(timeVel, 2)
     return timeVel
 
@@ -27,7 +28,8 @@ def compTime(velTime, accTime, boardingTime, rotationSpeed)
 
 #Calculates the distance to stop until the elevator has to stop to reach the destination
 def stoppingDistance(move)
-    float stopDist = (vel/10)^2
+    kmVel = (vel/1000)*3600
+    float stopDist = (vel/10)*(vel/10)
     stopDist = round(stopDist,2)
     return stopDist
 
