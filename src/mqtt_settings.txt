@@ -1,0 +1,3 @@
+server:mqtt://marcelochsendorf.com
+topic: elevator_pos_update
+payload: {"x":"7","y":"4","uuid":"213","timestamp":"1531263776"}
