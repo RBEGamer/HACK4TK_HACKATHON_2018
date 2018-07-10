@@ -1,4 +1,18 @@
 'use strict';
+var fs = require('fs');
+
+
+
+function guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  }
+
+
 
 var grid = 20;
  var grid_w = 10;
@@ -14,12 +28,18 @@ for (let w = 0; w < grid_w; w++) {
    for (let h = 0; h < grid_h; h++) {
   
 // create a rectangle object
+
+var col = '#ccc';
+
+if(w == 0 && h == 0){
+    col = '#000';
+}
 var rect = new fabric.Rect({
     left: w*grid,
     top: h*grid,
     width: grid,
     height: grid,
-    fill: '#ccc',
+    fill: col,
     stroke: 'white',
     strokeWidth: 1,
     lockScalingX: true,
@@ -66,8 +86,12 @@ function add_elevator_obj(_x,_y,_type){
         originX: 'left', 
         originY: 'top',
         centeredRotation: true,
-        uuid:uuoid,
-        evevator_track_part:true
+        uuid:guid(),
+        inc_uuid:uuoid,
+        evevator_track_part:true,
+        track_type:_type,
+        pos_x:_x,
+        pos_y:_y
       });
       uuoid++;
       obj.setControlsVisibility({
@@ -113,7 +137,10 @@ canvas.on('object:moving', function(options) {
 
   options.target.set({
     left: Math.round(options.target.left / grid) * grid,
-    top: Math.round(options.target.top / grid) * grid
+    top: Math.round(options.target.top / grid) * grid,
+
+    pos_x:options.target.left / grid,
+    pos_y:options.target.top / grid
   });
   
 });
@@ -126,5 +153,34 @@ add_elevator_obj(1,1,0);
 
   document.getElementById("add_vert_track_btn").addEventListener("click", function( event ) {
     // display the current click count inside the clicked div
-    add_elevator_obj(1,1,0);
+    add_elevator_obj(0,0,0);
   }, false);
+
+
+
+  document.getElementById("export_btn").addEventListener("click", function( event ) {
+    // display the current click count inside the clicked div
+    export_json();
+  }, false);
+
+
+
+  function export_json(){
+var arr = [];
+    for (let index = 0; index < canvas.getObjects().length; index++) {
+        const element = canvas.getObjects()[index];
+
+        if(element.evevator_track_part != undefined && element.evevator_track_part != null && element.evevator_track_part){
+           // debugger;
+            arr.push({track_type:element.track_type,pos_x:element.pos_x,pos_y:element.pos_y,uuid:element.uuid, inc_uuid:element.inc_uuid});
+          }
+
+
+        
+    }    
+    fs.writeFile ("grid_data.json", JSON.stringify({grid:grid, grid_w:grid_w,grid_h:grid_h,tracks:arr}), function(err) {
+        if (err) throw err;
+        console.log('complete');
+        }
+    );
+  }
