@@ -1,6 +1,3 @@
-
-
-
 #Time the cabin need to accelerate (pos and neg)
 def accTime(acc, dist)
     float timeA
