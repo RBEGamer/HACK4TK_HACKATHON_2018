@@ -22,6 +22,8 @@ def run_simulation():
                 start_floor_DB.append(start_floor)
                 dest_floor = parts[2]
                 dest_floor_DB.append(dest_floor)
+                integerStart = int(row['start_floor'])
+                integerDest = int(row['dest_floor'])
                 content.pop(0)
             else:
                 break

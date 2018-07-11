@@ -40,6 +40,12 @@ var canvas = new fabric.Canvas('c', {
 
 
 
+var myMap = new Map();
+var keyString = "a string",
+    keyObj = {},
+    keyFunc = function () {};
+
+// setting the values
 client.on('connect', function () {
     client.subscribe('elevator_pos_update');
     client.subscribe('elevator_person_update');
@@ -48,7 +54,8 @@ client.on('connect', function () {
 
 client.on('message', function (topic, message) {
     // message is Buffer
-    console.log(message.toString())
+   console.log(message.toString())
+  
     var obj = null;
     try {
         obj = JSON.parse(message.toString());
@@ -59,34 +66,84 @@ client.on('message', function (topic, message) {
 
 
     if (topic == "elevator_pos_update") {
+       
         if (obj.x == undefined || obj.x == null) { return; }
         if (obj.y == undefined || obj.y == null) { return; }
         if (obj.uuid == undefined || obj.uuid == null) { return; }
-        if (obj.timestamp == undefined || obj.timestamp == null || (Math.floor(Date.now() / 1000) - obj.timestamp) > 10) { return; }
-        place_cabine(obj.x, obj.y, obj.uuid);
+        var diff =(Math.floor(Date.now() / 1000) - obj.timestamp);
+        if (obj.timestamp == undefined || obj.timestamp == null || diff > 30) { return; }
+        if(obj.y < 0){obj.y *= -1;}
+        var y =grid_h-(obj.y)-1;
+        
+        if(y > grid_w){y = grid_h;}
+        var x =obj.x-1;
+        if(obj.x <= 1){x = 0;}else if(obj.x == 2){x = 2;}
+        if(x < 0){x = 0;}
+        if(x > grid_w){x = grid_w;}
+        place_cabine(x, y, obj.uuid);
+
+if(myMap.size >0){
+    for (let entry of myMap.entries()) {
+        var k = entry[0];
+        var v =  entry[1];
+
+        if(v == null){return;}
+
+        if(y == v.y){
+            place_person(v.x,v.y, v.uuid, "1");
+            if(web_ui_person_id != "" && web_ui_person_id ==v.uuid){
+                web_ui_person_state = "2";
+               }
+            myMap.set( v.uuid, null)
+
+        }
+        //debugger;
+    }
+    }
     }
 
     if (topic == "elevator_person_update") {
+    
         if (obj.x == undefined || obj.x == null) { return; }
         if (obj.y == undefined || obj.y == null) { return; }
         if (obj.uuid == undefined || obj.uuid == null) { return; }
-        if (obj.timestamp == undefined || obj.timestamp == null || (Math.floor(Date.now() / 1000) - obj.timestamp) > 10) { return; }
+        var diff =(Math.floor(Date.now() / 1000) - obj.timestamp);
+        if (obj.timestamp == undefined || obj.timestamp == null || diff > 30) { return; }
         if (obj.state == undefined || obj.state == null) { return; }
        
        
        if(web_ui_person_id != "" && web_ui_person_id == obj.uuid){
         web_ui_person_state = obj.state;
-           
        }
-        place_person(obj.x, obj.y, obj.uuid, obj.state);
+     
+       var y =(obj.y);
+        //if(obj.y <= 4){y = 1;}else if(obj.y <= 60){y = 2;}
+       
+        
+        var y =grid_h-(obj.y)-2;
+
+        if(y < 0){y = 0;}
+        //if(y > grid_w){y = grid_h;}
+      
+
+
+        var x =obj.x-1;
+        if(obj.x <= 1){x = 1;}else if(obj.x == 2){x = 3;}
+        if(x < 0){x = 0;}
+        if(x > grid_w){x = grid_w;}
+
+        obj.x = x;
+        obj.y = y;
+        myMap.set(obj.uuid, obj);
+        place_person(x,y, obj.uuid, obj.state);
+
+
+
+          
     }
 
 
 });
-
-
-
-
 
 
 function guid() {
@@ -101,6 +158,15 @@ function guid() {
 
 
 
+
+
+
+
+
+
+
+
+
 app.get('/call', function (req, res) {
     //TODO GEN JSON PAYLOAD
 
@@ -111,6 +177,13 @@ app.get('/call', function (req, res) {
 
     web_ui_person_to = to;
     web_ui_person_from = from;
+
+
+    var x = to;
+    var uu = web_ui_person_id 
+     place_person(1,x,uu,"0");
+   myMap.set(uu, {x:1,y:x,uuid:uu,state:"0"});
+
 
     client.publish("elevator_person_call",JSON.stringify(tmp));
     console.log(JSON.stringify(tmp));
@@ -278,41 +351,11 @@ function add_elevator_obj(_x, _y, _type, _uuid = null) {
 
 }
 
-canvas.on('mouse:down', function (e) {
-
-    if (!document.getElementById("del_box").checked) {
-        return;
-    }
-    // clicked item will be
-
-    var id = canvas.getObjects().indexOf(e.target);
-    var obj = canvas.getObjects()[id];
-
-
-    if (obj.evevator_track_part != undefined && obj.evevator_track_part != null && obj.evevator_track_part) {
-        canvas.remove(obj);
-        document.getElementById("del_box").checked = false;
-    }
-
-    // canvas.renderAll();
-
-});
 
 
 
-// snap to grid
 
-canvas.on('object:moving', function (options) {
 
-    options.target.set({
-        left: Math.round(options.target.left / grid) * grid,
-        top: Math.round(options.target.top / grid) * grid,
-
-        pos_x: Math.round(options.target.left / grid),
-        pos_y: Math.round(options.target.top / grid)
-    });
-
-});
 
 
 
@@ -342,16 +385,16 @@ function place_person(_x, _y, _uuid, _state) {
         add_elevator_obj(_x, _y, 8, _uuid); //add a simulation cabin
     } else if (_state == "1") {
         add_elevator_obj(_x, _y, 9, _uuid); //add a simulation cabin
+        setTimeout(function () { place_person(_x, _y, _uuid, 2); }, 500); //clear icon after 5sek
     } else if (_state == "2") {
         add_elevator_obj(_x, _y, 10, _uuid); //add a simulation cabin
 
-        setTimeout(function () { place_person(0, 0, _uuid, 3); }, 5000); //clear icon after 5sek
+        setTimeout(function () { place_person(_x, _y, _uuid, 3); }, 1000); //clear icon after 5sek
     }
 
 
 
 }
-
 
 
 
