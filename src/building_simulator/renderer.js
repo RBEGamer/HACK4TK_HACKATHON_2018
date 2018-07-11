@@ -19,7 +19,7 @@ var client = mqtt.connect('mqtt://marcelochsendorf.com');
 
 var grid = 50;
 var grid_w = 10;
-var grid_h = 17;
+var grid_h = 17+14;
 var uuoid = 0;
 var cabine_storage = new Map();
 
@@ -63,7 +63,8 @@ client.on('message', function (topic, message) {
         if (obj.y == undefined || obj.y == null) { return; }
         if (obj.uuid == undefined || obj.uuid == null) { return; }
         if (obj.timestamp == undefined || obj.timestamp == null || (Math.floor(Date.now() / 1000) - obj.timestamp) > 10) { return; }
-        place_cabine(obj.x, obj.y, obj.uuid);
+   debugger;
+        place_cabine(obj.x, obj.y/grid, obj.uuid);
     }
 
     if (topic == "elevator_person_update") {
