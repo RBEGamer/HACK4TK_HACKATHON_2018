@@ -20,7 +20,7 @@ class Passengers_Together:
             self.list_passenger.remove(passenger)
             return True
         else:
-            print "no such passenger, something is wrong"
+            print ("no such passenger, something is wrong")
             return False
     
     def start_passenger(self, passenger):
@@ -71,15 +71,15 @@ class Cabin:
     
     def __del__(self):
         Cabin.cabin_Count -= 1
-        print "__del__"
+        print ("__del__")
 
 
 #class Floor:
 #class Passenger:
 
 cabin0 = Cabin(0)
-print cabin0.oritation
+print (cabin0.oritation)
 cabin0.set_oritation(Cabin.oritation.go_up)
-print cabin0.position
+print (cabin0.position)
 cabin0.set_position([1,2])
-print cabin0.position
+print (cabin0.position)
