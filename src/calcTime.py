@@ -35,7 +35,7 @@ def stoppingDistance(move)
 
 #Set the appropariet speed 5m/s vertical, 1m/s horizontal and moves the elevator
 def move()
-    if direction is "vertical":
+    if Case_Class_structure is "up" || "down":
         vel = vertVel
     else:
         vel = horVel
