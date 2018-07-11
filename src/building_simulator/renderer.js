@@ -170,9 +170,9 @@ function guid() {
 app.get('/call', function (req, res) {
     //TODO GEN JSON PAYLOAD
 
-    var from = Math.floor(Math.random() * 10) +3; 
-    var to = Math.floor(Math.random() * 10) +3; 
-
+    var from = Math.floor(Math.random() * 17) +1; 
+    var to = Math.floor(Math.random() * 17) +1; 
+    
     var tmp ={from:from,to:to,timestamp:Math.floor(Date.now() / 1000),uuid:web_ui_person_id};
 
     web_ui_person_to = to;
@@ -180,10 +180,13 @@ app.get('/call', function (req, res) {
 
 
     var x = to;
-    var uu = web_ui_person_id 
+    var uu = web_ui_person_id ;
      place_person(1,x,uu,"0");
    myMap.set(uu, {x:1,y:x,uuid:uu,state:"0"});
+  
 
+
+   setTimeout(function(){ web_ui_person_state = "2"; }, 3000);
 
     client.publish("elevator_person_call",JSON.stringify(tmp));
     console.log(JSON.stringify(tmp));
@@ -193,6 +196,7 @@ app.get('/call', function (req, res) {
 
 app.get('/caller_state', function (req, res) {
     res.json({uuid:web_ui_person_id,state:web_ui_person_state});
+    web_ui_person_state = "-1";
 });
 
 

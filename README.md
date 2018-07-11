@@ -36,4 +36,9 @@ We have desgned a small tool, to build and simulate a elevator system in a build
 ## IMAGES
 
 
+![GitHub Logo](/documentation/1.png)
+
+
+![GitHub Logo](/documentation/2.png)
+
 
