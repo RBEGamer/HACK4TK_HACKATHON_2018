@@ -19,7 +19,7 @@ var client = mqtt.connect('mqtt://marcelochsendorf.com');
 
 var grid = 50;
 var grid_w = 10;
-var grid_h = 17+14;
+var grid_h = 17;
 var uuoid = 0;
 var cabine_storage = new Map();
 
@@ -48,7 +48,7 @@ client.on('connect', function () {
 
 client.on('message', function (topic, message) {
     // message is Buffer
-    console.log(message.toString())
+   console.log(message.toString())
     var obj = null;
     try {
         obj = JSON.parse(message.toString());
@@ -62,16 +62,36 @@ client.on('message', function (topic, message) {
         if (obj.x == undefined || obj.x == null) { return; }
         if (obj.y == undefined || obj.y == null) { return; }
         if (obj.uuid == undefined || obj.uuid == null) { return; }
-        if (obj.timestamp == undefined || obj.timestamp == null || (Math.floor(Date.now() / 1000) - obj.timestamp) > 10) { return; }
-   debugger;
-        place_cabine(obj.x, obj.y/grid, obj.uuid);
+        var diff =(Math.floor(Date.now() / 1000) - obj.timestamp);
+        if (obj.timestamp == undefined || obj.timestamp == null || diff > 20) { return; }
+
+
+
+        if(obj.y < 0){obj.y *= -1;}
+        
+        var y =grid_h-(obj.y)-1;
+
+        if(y < 0){y = 0;}
+        if(y > grid_w){y = grid_h;}
+      
+
+
+        var x =obj.x-1;
+        if(obj.x <= 1){x = 0;}else if(obj.x == 2){x = 2;}
+        if(x < 0){x = 0;}
+        if(x > grid_w){x = grid_w;}
+          
+        console.log(y);
+        
+        place_cabine(x, y, obj.uuid);
     }
 
     if (topic == "elevator_person_update") {
         if (obj.x == undefined || obj.x == null) { return; }
         if (obj.y == undefined || obj.y == null) { return; }
         if (obj.uuid == undefined || obj.uuid == null) { return; }
-        if (obj.timestamp == undefined || obj.timestamp == null || (Math.floor(Date.now() / 1000) - obj.timestamp) > 10) { return; }
+        var diff =(Math.floor(Date.now() / 1000) - obj.timestamp);
+        if (obj.timestamp == undefined || obj.timestamp == null || diff > 10) { return; }
         if (obj.state == undefined || obj.state == null) { return; }
        
        
@@ -79,7 +99,25 @@ client.on('message', function (topic, message) {
         web_ui_person_state = obj.state;
            
        }
-        place_person(obj.x, obj.y, obj.uuid, obj.state);
+
+       var y =(60-obj.y);
+        //if(obj.y <= 4){y = 1;}else if(obj.y <= 60){y = 2;}
+        if(obj.y < 0){obj.y *= -1;}
+        
+        var y =grid_h-(obj.y)-1;
+
+        if(y < 0){y = 0;}
+        if(y > grid_w){y = grid_h;}
+      
+
+
+        var x =obj.x-1;
+        if(obj.x <= 1){x = 1;}else if(obj.x == 2){x = 3;}
+        if(x < 0){x = 0;}
+        if(x > grid_w){x = grid_w;}
+
+
+        place_person(obj.x,y, obj.uuid, obj.state);
     }
 
 

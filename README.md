@@ -6,11 +6,11 @@ The second round of the Hack4TK_2018
 
 
 ## THE TEAM
-*
-*
-*
-*
-*
+* Marcel Ochsendorf
+* Wiling Xi
+* Chris....
+* Anne ...
+* ???
 
 
 ## THE PROBLEM
