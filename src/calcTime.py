@@ -7,7 +7,7 @@ int accelaraionTime = 5 #[s] time needed to go from 0 m/s to 5 m/s and vice vers
 #If the elevator accelerates or brakes it needs 5 sec each time to do a full acceleration/stop
 
 def accTime()
-    accTime = accelaraionTime
+    accTime += accelaraionTime
     return accTime
 
 #Time needed fo cambin to move the next destination
