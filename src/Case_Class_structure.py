@@ -2,8 +2,12 @@ from enum import Enum
 
 class Passengers_Together:
     def __init__(self, num=0, list_passenger = []):
+        self.id = id
+        self.time_stamp = time_stamp
         self.num = num
         self.list_passenger = list_passenger
+        self.start_position = start
+        self.stop_position = stop
     
     def add_passenger(self, passenger):
         self.num += 1
@@ -18,6 +22,15 @@ class Passengers_Together:
         else:
             print "no such passenger, something is wrong"
             return False
+    
+    def start_passenger(self, passenger):
+        self.start_point = start 
+        return
+
+    def end_passeger(self, passenger):
+        self.end_point
+        return
+
         
     
 
