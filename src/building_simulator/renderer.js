@@ -1,38 +1,90 @@
 'use strict';
 var fs = require('fs');
 
-var mqtt = require('mqtt');
-var client  = mqtt.connect('mqtt://marcelochsendorf.com');
 
+
+
+var express = require('express');
+var app = express();
+
+
+
+var mqtt = require('mqtt');
+var client = mqtt.connect('mqtt://marcelochsendorf.com');
+
+
+
+
+
+
+var grid = 50;
+var grid_w = 10;
+var grid_h = 17;
+var uuoid = 0;
+var cabine_storage = new Map();
+
+
+var web_ui_person_id = guid();
+var web_ui_person_state = "";
+
+var web_ui_person_to = "";
+var web_ui_person_from = "";
+
+
+var sim_running = false;
+var canvas = new fabric.Canvas('c', {
+    selection: false,
+    width: grid_w * grid,
+    height: grid_h * grid
+});
 
 
 
 client.on('connect', function () {
     client.subscribe('elevator_pos_update');
+    client.subscribe('elevator_person_update');
 
-  })
-  
-  client.on('message', function (topic, message) {
+})
+
+client.on('message', function (topic, message) {
     // message is Buffer
     console.log(message.toString())
-   var obj = null;
-try {
-    obj = JSON.parse(message.toString());
-} catch (error) {
-    console.log("parse error");
-    return;
-}
-    
+    var obj = null;
+    try {
+        obj = JSON.parse(message.toString());
+    } catch (error) {
+        console.log("parse error");
+        return;
+    }
 
-if(topic == "elevator_pos_update"){
-if(obj.x == undefined || obj.x == null){return;}
-if(obj.y == undefined || obj.y == null){return;}
-if(obj.uuid == undefined || obj.uuid == null){return;}
-if(obj.timestamp == undefined || obj.timestamp == null || (Math.floor(Date.now() / 1000)-obj.timestamp) > 10){return;}
-place_cabine(obj.x,obj.y,obj.uuid);
-}
 
-  })
+    if (topic == "elevator_pos_update") {
+        if (obj.x == undefined || obj.x == null) { return; }
+        if (obj.y == undefined || obj.y == null) { return; }
+        if (obj.uuid == undefined || obj.uuid == null) { return; }
+        if (obj.timestamp == undefined || obj.timestamp == null || (Math.floor(Date.now() / 1000) - obj.timestamp) > 10) { return; }
+        place_cabine(obj.x, obj.y, obj.uuid);
+    }
+
+    if (topic == "elevator_person_update") {
+        if (obj.x == undefined || obj.x == null) { return; }
+        if (obj.y == undefined || obj.y == null) { return; }
+        if (obj.uuid == undefined || obj.uuid == null) { return; }
+        if (obj.timestamp == undefined || obj.timestamp == null || (Math.floor(Date.now() / 1000) - obj.timestamp) > 10) { return; }
+        if (obj.state == undefined || obj.state == null) { return; }
+       
+       
+       if(web_ui_person_id != "" && web_ui_person_id == obj.uuid){
+        web_ui_person_state = obj.state;
+           
+       }
+        place_person(obj.x, obj.y, obj.uuid, obj.state);
+    }
+
+
+});
+
+
 
 
 
@@ -48,18 +100,41 @@ function guid() {
 
 
 
-var grid = 30;
-var grid_w = 10;
-var grid_h = 17;
-var uuoid = 0;
-var cabine_storage = new Map();
 
-var sim_running = false;
-var canvas = new fabric.Canvas('c', {
-    selection: false,
-    width: grid_w * grid,
-    height: grid_h * grid
+app.get('/call', function (req, res) {
+    //TODO GEN JSON PAYLOAD
+
+    var from = Math.floor(Math.random() * 10) +3; 
+    var to = Math.floor(Math.random() * 10) +3; 
+
+    var tmp ={from:from,to:to,timestamp:Math.floor(Date.now() / 1000),uuid:web_ui_person_id};
+
+    web_ui_person_to = to;
+    web_ui_person_from = from;
+
+    client.publish("elevator_person_call",JSON.stringify(tmp));
+    console.log(JSON.stringify(tmp));
+    res.json(tmp);
 });
+
+
+app.get('/caller_state', function (req, res) {
+    res.json({uuid:web_ui_person_id,state:web_ui_person_state});
+});
+
+
+app.use(express.static('public'));
+
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+});
+
+
+
+
+
+
+
 
 // create grid
 function import_json() {
@@ -97,9 +172,6 @@ function create_grid() {
 
             var col = '#ccc';
 
-            if (w == 0 && h == 0) {
-                col = '#000';
-            }
             var rect = new fabric.Rect({
                 left: w * grid,
                 top: h * grid,
@@ -136,6 +208,11 @@ function create_grid() {
 }
 create_grid();
 
+
+
+
+
+
 // add objects
 function add_elevator_obj(_x, _y, _type, _uuid = null) {
 
@@ -144,53 +221,60 @@ function add_elevator_obj(_x, _y, _type, _uuid = null) {
     var col = "#FFF";
 
     if (_type == 0) {
-        col = '#F95243';
+        col = "./img/track_vertical.png";
     } else if (_type == 1) {
-        col = '#F3F04A';
+        col = "./img/track_horizontal.png";
     } else if (_type == 2) {
-        col = '#347C76';
+        col = "./img/exchanger.png";
     } else if (_type == 3) {
-        col = '#6ECD61'
+        col = "./img/exchanger.png";
     } else if (_type == 4) {
-        col = '#FD7A38';
+        col = "./img/exchanger.png";
     } else if (_type == 5) {
-        col = '#FD7A38';
+        col = "./img/exchanger.png";
     } else if (_type == 6) {
-        col = '#715794';
+        col = "./img/lift_cart_static.png";
     } else if (_type == 7) {
-        col = '#715794';
+        col = "./img/lift_cart.png";
+    } else if (_type == 8) {
+        col = "./img/door_close_person.png";
+    } else if (_type == 9) {
+        col = "./img/door_open.png";
+    } else if (_type == 10) {
+        col = "./img/door_close.png";
     }
 
-    var obj = new fabric.Rect({
-        left: _x * grid,
-        top: _y * grid,
-        width: grid,
-        height: grid,
-        fill: col,
-        originX: 'left',
-        originY: 'top',
-        centeredRotation: true,
-        uuid: _uuid || guid(),
-        inc_uuid: uuoid,
-        evevator_track_part: true,
-        track_type: _type,
-        pos_x: _x,
-        pos_y: _y,
-        last_pos_update:Math.floor(Date.now() / 1000)
+    var rect = new fabric.Image.fromURL(col, function (myImg) {
+        canvas.add(myImg.set({
+            width: grid,
+            hasControls: false,
+            //cornerColor: 'green',cornerSize: 16,transparentCorners: false,
+            selection: false,
+            lockRotation: true,
+            lockMovement: true, lockMovementY: true, lockMovementX: true,
+            lockUniScaling: true, lockScalingY: true, lockScalingX: true,
+            hoverCursor: 'default',
+            hasRotatingPoint: false,
+            hasBorders: true, borderColor: 'red', borderSize: 2,
+            transparentBorder: false,
+            height: grid,
+            angle: 0,
+            cornersize: 10,
+            originX: 'left',
+            originY: 'top',
+            uuid: _uuid || guid(),
+            inc_uuid: uuoid,
+            evevator_track_part: true,
+            track_type: _type,
+            pos_x: _x,
+            pos_y: _y,
+            left: _x * grid,
+            top: _y * grid,
+            last_pos_update: Math.floor(Date.now() / 1000),
+            state: null
+        }));
     });
-    uuoid++;
-    obj.setControlsVisibility({
-        mt: false,
-        mb: false,
-        ml: false,
-        mr: false,
-        bl: false,
-        br: false,
-        tl: false,
-        tr: false,
-        mtr: false,
-    });
-    canvas.add(obj);
+
 
 }
 
@@ -234,8 +318,40 @@ canvas.on('object:moving', function (options) {
 
 
 setInterval(function () {
- //  cabine_timeout_remove();
+    //  cabine_timeout_remove();
 }, 1000);
+
+
+
+
+function place_person(_x, _y, _uuid, _state) {
+
+
+    for (let index = 0; index < canvas.getObjects().length; index++) {
+        const element = canvas.getObjects()[index];
+        if (element.evevator_track_part != undefined && element.evevator_track_part != null && element.evevator_track_part) {
+            if (element.track_type != undefined && element.track_type != null && (element.track_type == 8 || element.track_type == 9 || element.track_type == 10)) {
+                if (element.uuid != undefined && element.uuid != null && element.uuid == _uuid) {
+                    canvas.remove(element);
+                }
+            }
+        }
+    }
+
+    if (_state == "0") {
+        add_elevator_obj(_x, _y, 8, _uuid); //add a simulation cabin
+    } else if (_state == "1") {
+        add_elevator_obj(_x, _y, 9, _uuid); //add a simulation cabin
+    } else if (_state == "2") {
+        add_elevator_obj(_x, _y, 10, _uuid); //add a simulation cabin
+
+        setTimeout(function () { place_person(0, 0, _uuid, 3); }, 5000); //clear icon after 5sek
+    }
+
+
+
+}
+
 
 
 
@@ -250,7 +366,7 @@ function place_cabine(_x, _y, _uuid) {
         });
         return;
     }
-//UPDATE POSITION
+    //UPDATE POSITION
     for (let index = 0; index < canvas.getObjects().length; index++) {
         const element = canvas.getObjects()[index];
         if (element.evevator_track_part != undefined && element.evevator_track_part != null && element.evevator_track_part) {
@@ -261,7 +377,7 @@ function place_cabine(_x, _y, _uuid) {
                         top: _y * grid,
                         pos_x: _x,
                         pos_y: _y,
-                        last_pos_update:Math.floor(Date.now() / 1000)
+                        last_pos_update: Math.floor(Date.now() / 1000)
                     });
                     canvas.renderAll();
                     break;
@@ -272,15 +388,15 @@ function place_cabine(_x, _y, _uuid) {
 }
 
 
-function cabine_timeout_remove(){
-   var  ts = Math.floor(Date.now() / 1000);
+function cabine_timeout_remove() {
+    var ts = Math.floor(Date.now() / 1000);
     for (let index = 0; index < canvas.getObjects().length; index++) {
         const element = canvas.getObjects()[index];
         if (element.evevator_track_part != undefined && element.evevator_track_part != null && element.evevator_track_part) {
             if (element.track_type != undefined && element.track_type != null && element.track_type == 7) {
                 var ts_tmo = (ts - element.last_pos_update);
-                if (element.last_pos_update != undefined && element.last_pos_update != null &&  ts_tmo> 20 ) {
-                canvas.remove(element);
+                if (element.last_pos_update != undefined && element.last_pos_update != null && ts_tmo > 20) {
+                    canvas.remove(element);
                 }
             }
         }
@@ -333,14 +449,6 @@ function load_sample_loop() {
 load_sample_loop();
 
 
-document.getElementById("add_vert_track_btn").addEventListener("click", function (event) {
-    // display the current click count inside the clicked div
-    if (sim_running) {
-        return;
-    }
-    add_elevator_obj(0, 0, 0);
-}, false);
-
 
 
 document.getElementById("export_btn").addEventListener("click", function (event) {
@@ -361,41 +469,6 @@ document.getElementById("import_btn").addEventListener("click", function (event)
 
 
 
-
-document.getElementById("add_hori_track_btn").addEventListener("click", function (event) {
-    // display the current click count inside the clicked div
-    if (sim_running) {
-        return;
-    }
-    add_elevator_obj(0, 0, 1);
-}, false);
-
-document.getElementById("add_cabin_track_btn").addEventListener("click", function (event) {
-    // display the current click count inside the clicked div
-    if (sim_running) {
-        return;
-    }
-    add_elevator_obj(0, 0, 6);
-}, false);
-
-
-
-document.getElementById("add_changer_track_btn").addEventListener("click", function (event) {
-    // display the current click count inside the clicked div
-    if (sim_running) {
-        return;
-    }
-    add_elevator_obj(0, 0, 3);
-}, false);
-
-
-document.getElementById("add_stop_track_btn").addEventListener("click", function (event) {
-    // display the current click count inside the clicked div
-    if (sim_running) {
-        return;
-    }
-    add_elevator_obj(0, 0, 4);
-}, false);
 
 
 document.getElementById("rum_sim_btn").addEventListener("click", function (event) {
@@ -446,9 +519,11 @@ function export_json() {
 
 
 function stop_sim_btn() {
+
+    //TODO REMOVE ALL DOORS
+
+
     //remove all objects with track_type_7
-
-
     for (let index = 0; index < canvas.getObjects().length; index++) {
         const element = canvas.getObjects()[index];
         if (element.evevator_track_part != undefined && element.evevator_track_part != null && element.evevator_track_part) {
@@ -467,10 +542,10 @@ function stop_sim_btn() {
 
 
 function run_simulation() {
-    var graph = create_yamlgraph();
-
-
-
+    //TODO CREATE GRAPH AN SEND IT TO PYTHON
+    // var graph = create_yamlgraph();
+    client.last_pos_update("elevator_start_simulation", "FullDayTraffic-b.csv");
+    sim_running = true;
     //
 }
 

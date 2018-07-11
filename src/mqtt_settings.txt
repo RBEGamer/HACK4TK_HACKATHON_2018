@@ -1,3 +1,22 @@
 server:mqtt://marcelochsendorf.com
+
+-> FROM SERVER TO FRONTEND
 topic: elevator_pos_update
 payload: {"x":"7","y":"4","uuid":"213","timestamp":"1531263776"}
+
+
+-> FROM FRONTEND TO SERVER
+topic: elevator_start_simulation
+payload: FullDayTraffic-b.csv
+
+
+-> FROM SERVER TO FRONTEND
+topic: elevator_person_update
+payload: {"x":"7","y":"4","uuid":"213","timestamp":"1531263776","state":"0"}
+
+-> state 0 waiting at door (pressed call), 1 door open, 2 door closed
+
+
+->MAKE call
+elevator_person_call
+{"from":"2","to":"4","timestamp":"1531263776","uuid":"0"}
