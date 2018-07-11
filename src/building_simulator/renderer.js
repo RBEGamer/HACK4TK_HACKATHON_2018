@@ -42,6 +42,7 @@ var canvas = new fabric.Canvas('c', {
 
 client.on('connect', function () {
     client.subscribe('elevator_pos_update');
+    client.subscribe('elevator_person_update');
 
 })
 
