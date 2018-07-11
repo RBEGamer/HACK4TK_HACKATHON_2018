@@ -2,7 +2,8 @@ import paho.mqtt.client as mqtt
 import time
 import csv
 old_time_slop = 0
-speed = 5
+speed = [5,5,5]
+speed_dup = 5
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -117,7 +118,6 @@ time_DB = []
 start_floor_DB = []
 dest_floor_DB = []
 
-#code from Anton
 def run_simulation():
     with open('../documentation/test_data/MorningTraffic-b.csv', 'r') as file:
         content = file.readlines()
@@ -171,22 +171,22 @@ def need_stop(current_passenger, array_current_passenger):
     return stops
 
 def need_wait(current_passenger, array_current_passenger):
-    global speed
+    global speed, speed_dup
     pick_up_coordinate, let_go_coordinate = coordinate(current_passenger)
     waits=[]
     for i in array_current_passenger:
         pick_up_i, let_go_i = coordinate(i)
         waits.append(let_go_i[1])
     if pick_up_coordinate == 0:
-        return max(waits) / speed + 6
+        return max(waits) / speed_dup + 6
     else:
-        return (120-min(waits))/ speed + 6
+        return (120-min(waits))/ speed_dup + 6
 
 
 
 
 def single_cabin_weight(current_passenger, i):
-    global speed
+    global speed, speed_dup
     pick_up_coordinate, let_go_coordinate = coordinate(current_passenger)
     cabin = cabin_awake[i]
     waiting_for_empty = 0
@@ -231,11 +231,11 @@ def single_cabin_weight(current_passenger, i):
         else:
             delay2 = 6
             travel = 240 - abs(let_go_coordinate[1]) + abs(cabin.position[1])
-    return delay + delay2 + travel / speed + waiting_for_empty, rotation
+    return delay + delay2 + travel / speed_dup + waiting_for_empty, rotation
 
         
 
-#brute force greedy
+#greedy
 def time_calculation(current_passenger):
     min = 300
     selected = -1
@@ -273,11 +273,23 @@ def find_to_delete(cabin, y):
     
 
 def cabin_update(cabin_awake,time_slop):
-    global speed
+    global speed, speed_dup
     print "time_slop is"
     print time_slop
- 
+    
+    conflic_x = []
+    conflic_y = []
+    for id in cabin_awake:
+        conflic_x.append(id.get_position()[0])
+        conflic_y.append(id.get_position()[1])
+    
+    idx = 0
     for i in cabin_awake:
+        if idx - 1 > 0:
+            if conflic_x[idx] == conflic_x[idx-1] and abs(conflic_y[idx]-conflic_y[idx-1])<=8:
+                speed[idx] = 0
+            else:
+                speed[idx] = 5
         temp_x =i.get_position()[0]
         temp_y =i.get_position()[1]
         y = cabin_pass_sort(i)
@@ -285,45 +297,41 @@ def cabin_update(cabin_awake,time_slop):
         old_height = old_height_index[1]
         if i.get_oritation() == Cabin.oritation.go_up:
             temp_x =i.get_position()[0]
-            temp_y =i.get_position()[1] + time_slop * speed
+            temp_y =i.get_position()[1] + time_slop * speed[idx]
             for j in y:
                 if temp_y > j:
-                    speed = 0
+                    speed[idx] = 0
+                    i.list_of_passengers.del_passenger(i.list_of_passengers.list_passenger[find_to_delete(i,j)])
                 else:
-                    speed = 5
-            #why it jumps
-
+                    speed[idx] = 5
+            #reason why it used to jump
 
             if temp_y >= 120:
-            #if (old_height + time_slop * speed) >= 124:
                 temp_x = (temp_x+1)%2
                 temp_y = abs(240-temp_y)
-                #i.set_position([(i.get_position()[0]+1)%2, (240-i.get_position()[1])])
                 i.set_oritation(Cabin.oritation.go_down)
-                speed = 5
+                speed[idx] = 5
             i.set_position([temp_x,temp_y])
         
         else:
             temp_x = 1
-            #temp_x =i.get_position()[0]
-            temp_y =i.get_position()[1] - time_slop * speed
+            temp_y =i.get_position()[1] - time_slop * speed[idx]
             for j in y:
                 if temp_y < j:
-                    speed = 0
+                    speed[idx] = 0
+                    i.list_of_passengers.del_passenger(i.list_of_passengers.list_passenger[find_to_delete(i,j)])
                 else:
-                    speed = 5
+                    speed[idx] = 5
 
             if temp_y < 0:
-            #if (old_height + time_slop * speed) < 0:
                 temp_x = (temp_x+1)%2
                 temp_y = abs(temp_y)
-            #i.set_position([(i.get_position()[0]+1)%2, abs(i.get_position()[1])])
                 i.set_oritation(Cabin.oritation.go_up)
-                speed = 5
+                speed[idx] = 5
             i.set_position([temp_x,temp_y])
+            idx += 1
 
 
-        #i.set_position([temp_x,temp_y])
 
 client.loop_start()        
 
