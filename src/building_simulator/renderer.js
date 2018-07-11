@@ -91,6 +91,9 @@ if(myMap.size >0){
 
         if(y == v.y){
             place_person(v.x,v.y, v.uuid, "1");
+            if(web_ui_person_id != "" && web_ui_person_id ==v.uuid){
+                web_ui_person_state = "2";
+               }
             myMap.set( v.uuid, null)
 
         }
@@ -111,7 +114,6 @@ if(myMap.size >0){
        
        if(web_ui_person_id != "" && web_ui_person_id == obj.uuid){
         web_ui_person_state = obj.state;
-           
        }
      
        var y =(obj.y);
@@ -144,10 +146,6 @@ if(myMap.size >0){
 });
 
 
-
-
-
-
 function guid() {
     function s4() {
         return Math.floor((1 + Math.random()) * 0x10000)
@@ -156,6 +154,15 @@ function guid() {
     }
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -170,6 +177,13 @@ app.get('/call', function (req, res) {
 
     web_ui_person_to = to;
     web_ui_person_from = from;
+
+
+    var x = to;
+    var uu = web_ui_person_id 
+     place_person(1,x,uu,"0");
+   myMap.set(uu, {x:1,y:x,uuid:uu,state:"0"});
+
 
     client.publish("elevator_person_call",JSON.stringify(tmp));
     console.log(JSON.stringify(tmp));
@@ -371,17 +385,16 @@ function place_person(_x, _y, _uuid, _state) {
         add_elevator_obj(_x, _y, 8, _uuid); //add a simulation cabin
     } else if (_state == "1") {
         add_elevator_obj(_x, _y, 9, _uuid); //add a simulation cabin
-        setTimeout(function () { place_person(_x, _y, _uuid, 2); }, 2000); //clear icon after 5sek
+        setTimeout(function () { place_person(_x, _y, _uuid, 2); }, 500); //clear icon after 5sek
     } else if (_state == "2") {
         add_elevator_obj(_x, _y, 10, _uuid); //add a simulation cabin
 
-        setTimeout(function () { place_person(_x, _y, _uuid, 3); }, 2000); //clear icon after 5sek
+        setTimeout(function () { place_person(_x, _y, _uuid, 3); }, 1000); //clear icon after 5sek
     }
 
 
 
 }
-
 
 
 
