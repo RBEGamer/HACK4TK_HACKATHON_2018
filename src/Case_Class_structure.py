@@ -1,13 +1,14 @@
 from enum import Enum
 
 class Passengers_Together:
-    def __init__(self, num=0, list_passenger = []):
+    def __init__(self, num=0, list_passenger = [], time_stamp=0, start_point = [0,0], end_point = [0,0] ):
         self.id = id
         self.time_stamp = time_stamp
         self.num = num
         self.list_passenger = list_passenger
-        self.start_position = start
-        self.stop_position = stop
+        self.start_point = start_point
+        self.end_point = end_point
+        
     
     def add_passenger(self, passenger):
         self.num += 1
@@ -23,12 +24,12 @@ class Passengers_Together:
             print ("no such passenger, something is wrong")
             return False
     
-    def start_passenger(self, passenger):
-        self.start_point = start 
+    def start_passenger(self, start_point):
+        self.start_point = start_point
         return
 
-    def end_passeger(self, passenger):
-        self.end_point
+    def end_passeger(self, end_point):
+        self.end_point = end_point
         return
 
         
@@ -64,7 +65,7 @@ class Cabin:
         return self.velocity
 
     def get_position(self):
-        return self.distance_to_top
+        return self.position
 
     def get_list_of_passengers(self):
         return self.list_of_passengers
