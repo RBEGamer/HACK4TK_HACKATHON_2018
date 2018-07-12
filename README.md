@@ -7,8 +7,8 @@ The second round of the Hack4TK_2018
 
 ## THE TEAM
 * Marcel Ochsendorf
-* Wiling Xi
-* Chris....
+* Weiling Xi
+* Christoph Behr
 * Anne ...
 * ???
 
@@ -40,5 +40,3 @@ We have desgned a small tool, to build and simulate a elevator system in a build
 
 
 ![GitHub Logo](/documentation/2.png)
-
-

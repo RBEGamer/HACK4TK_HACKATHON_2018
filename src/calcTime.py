@@ -25,6 +25,7 @@ def compTime(velTime, accTime, boardingTime, rotationSpeed)
     float time
     time = velTime + accTime + boardingTime + rotationSpeed
     return time
+compTime()
 
 #Calculates the distance to stop until the elevator has to stop to reach the destination
 def stoppingDistance(move)
@@ -32,6 +33,7 @@ def stoppingDistance(move)
     float stopDist = (vel/10)*(vel/10)
     stopDist = round(stopDist,2)
     return stopDist
+stopDistnace()
 
 #Set the appropariet speed 5m/s vertical, 1m/s horizontal and moves the elevator
 def move()
