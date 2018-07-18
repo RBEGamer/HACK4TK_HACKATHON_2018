@@ -9,8 +9,8 @@ The second round of the Hack4TK_2018
 * Marcel Ochsendorf
 * Weiling Xi
 * Christoph Behr
-* Anne ...
-* ???
+* Anna Alganaki
+* Anton Prokopov
 
 
 ## THE PROBLEM
